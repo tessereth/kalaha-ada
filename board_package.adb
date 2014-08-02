@@ -132,6 +132,8 @@ package body board_package is
       -- if finished on side and it was empty, claim
       if not Board_I.Is_Pond and then Get(Board, Board_I) = 1
         and then Get(Board, Opposite(Board_I)) > 0 then
+         Board.Add((Current_Player, True, Side_Index'First), Get(Board, Board_I));
+         Board.Set(Board_I, 0);
          Board.Add((Current_Player, True, Side_Index'First), Get(Board, Opposite(Board_I)));
          Board.Set(Opposite(Board_I), 0);
       end if;
@@ -184,7 +186,7 @@ package body board_package is
       end loop;
       Str := Str & "), Ponds => (";
       for P in Player_T'Range loop
-         Str := Str & Board.Ponds(P)'Img;
+         Str := Str & Board.Ponds(P)'Img & ", ";
       end loop;
       Str := Str & ")}";
       return To_String(Str);

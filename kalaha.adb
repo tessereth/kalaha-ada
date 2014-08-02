@@ -27,10 +27,11 @@ begin
          Board.Move(Current_Player, Move, Next_Player);
          Current_Player := Next_Player;
       exception
-         when Ada.IO_Exceptions.Data_Error |
-              Invalid_Board_Index =>
+         when Invalid_Board_Index =>
             Put_Line ("Invalid move. Try again.");
-            delay 1.0;
+         when Ada.IO_Exceptions.Data_Error =>
+            Put_Line ("Enter a move between 1 and 6.");
+            Skip_Line(1);
       end;
    end loop;
    Put_Line("Game has finished");
