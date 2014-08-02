@@ -1,0 +1,6 @@
+project Kalaha is
+
+   for Main use ("kalaha.adb");
+
+end Kalaha;
+
