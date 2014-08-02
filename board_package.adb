@@ -113,6 +113,10 @@ package body board_package is
       Current_Player : constant Player_T := Board_Idx.Player;
       Board_I : Board_Index := Board_Idx;
    begin
+      -- validate the move
+      if Get(Board, Board_Idx) <= 0 then
+         raise Invalid_Board_Index;
+      end if;
       -- Move the seeds
       Board.Set(Board_I, 0);
       for I in 1 .. Seeds loop
@@ -176,13 +180,11 @@ package body board_package is
          for S in Side_Index'Range loop
             Str := Str & Board.Sides(P)(S)'img & ", ";
          end loop;
-         Str := Str & ")";
+         Str := Str & "), ";
       end loop;
       Str := Str & "), Ponds => (";
       for P in Player_T'Range loop
-         Str := Str & "(";
-         Str := Str & Board.Ponds(P)'Img & ", ";
-         Str := Str & ")";
+         Str := Str & Board.Ponds(P)'Img;
       end loop;
       Str := Str & ")}";
       return To_String(Str);

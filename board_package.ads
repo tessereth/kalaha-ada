@@ -4,7 +4,7 @@ generic
 
 package Board_Package is
 
-   subtype Side_Index is Integer range 0 .. Side_Width;
+   subtype Side_Index is Integer range 1 .. Side_Width;
    subtype Seed_Count is Integer range 0 .. Initial_Seeds * Side_Width * 2;
    type Side_T is array (Side_Index) of Seed_Count;
    subtype Pond_T is Seed_Count;
