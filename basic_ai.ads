@@ -1,8 +1,8 @@
 with Board_Package;
 generic
-   with package Board_Package_G is new Board_Package (<>);
+   with package Board_Package_I is new Board_Package (<>);
 package Basic_AI is
-   use Board_Package_G;
+   use Board_Package_I;
    type Kalaha_AI is interface;
 
    function Next (Ai : Kalaha_AI; Board : Board_T; Player : Player_T) return Side_Index is abstract;

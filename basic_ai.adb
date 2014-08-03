@@ -44,7 +44,7 @@ package body Basic_AI is
             return S;
          end if;
       end loop;
-      return Side_Index'First;
+      return Side_Index'Invalid_Value;
    end Next;
 
    overriding function Next (Ai : Random_AI; Board : Board_T; Player : Player_T) return Side_Index is
