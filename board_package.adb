@@ -7,9 +7,6 @@ package body Board_Package is
    package Seed_IO is new Integer_IO (Seed_Count);
    use Seed_IO;
 
-   Num_Players : constant Positive :=
-     Player_T'Pos (Player_T'Last) - Player_T'Pos (Player_T'First) + 1;
-
    function Is_Zero (Side : Side_T) return Boolean is
    begin
       for I of Side loop

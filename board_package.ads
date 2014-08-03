@@ -5,8 +5,11 @@ generic
 
 package Board_Package is
 
+   Num_Players : constant Positive :=
+     Player_T'Pos (Player_T'Last) - Player_T'Pos (Player_T'First) + 1;
+
    subtype Side_Index is Integer range 1 .. Side_Width;
-   subtype Seed_Count is Integer range 0 .. Initial_Seeds * Side_Width * 2;
+   subtype Seed_Count is Integer range 0 .. Initial_Seeds * Side_Width * Num_Players;
    type Side_T is array (Side_Index) of Seed_Count;
    subtype Pond_T is Seed_Count;
    type Sides_T is array (Player_T) of Side_T;
