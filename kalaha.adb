@@ -15,7 +15,7 @@ procedure Kalaha is
    Choice : Side_Index;
 begin
    Put_Line ("Welcome to Kalaha!");
-   New_Line (1);
+   New_Line;
 
    Put_Line ("Enter a number between 1 and 6 to move.");
    while not Finished (Board) loop
@@ -31,9 +31,11 @@ begin
             Put_Line ("Invalid move. Try again.");
          when Ada.IO_Exceptions.Data_Error =>
             Put_Line ("Enter a move between 1 and 6.");
-            Skip_Line (1);
+            Skip_Line;
       end;
    end loop;
    Put_Line ("Game has finished");
+   Put_Line (Board.Pretty_String (Current_Player));
+   Put_Line ("Player " & Current_Player'Img);
    Put_Line ("Congratulations Player " & Winner (Board)'Img & " on winning!");
 end Kalaha;

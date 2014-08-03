@@ -23,8 +23,13 @@ package Board_Package is
       Side_Idx : Side_Index;
    end record;
 
-   procedure Move (Board : in out Board_T; Player : in Player_T; Choice : in Side_Index; Next_Player : out Player_T);
-   procedure Move (Board : in out Board_T; Board_Idx : Board_Index; Next_Player : out Player_T);
+   function Total_Seeds (Board : in Board_T) return Seed_Count;
+   procedure Move (Board : in out Board_T; Player : in Player_T; Choice : in Side_Index; Next_Player : out Player_T) with
+     Pre  => Board.Total_Seeds = Seed_Count'Last,
+     Post => Board.Total_Seeds = Seed_Count'Last;
+   procedure Move (Board : in out Board_T; Board_Idx : Board_Index; Next_Player : out Player_T) with
+     Pre  => Board.Total_Seeds = Seed_Count'Last,
+     Post => Board.Total_Seeds = Seed_Count'Last;
    function Finished (Board : Board_T) return Boolean;
    function Winner (Board : Board_T) return Player_T;
    function Is_Capture (Board : in Board_T; Board_Idx : in Board_Index) return Boolean;

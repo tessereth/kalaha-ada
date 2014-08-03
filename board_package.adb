@@ -111,16 +111,41 @@ package body Board_Package is
       Board.Add (Board_Idx, 1);
    end Inc;
 
+   function Total_Seeds (Board : in Board_T) return Seed_Count is
+      So_Far : Seed_Count := Seed_Count'First;
+   begin
+      for P in Player_T'Range loop
+         for S in Side_Index'Range loop
+            So_Far := So_Far + Board.Sides (P)(S);
+         end loop;
+         So_Far := So_Far + Board.Ponds (P);
+      end loop;
+      return So_Far;
+   end Total_Seeds;
+
    function Is_Capture (Board : in Board_T; Board_Idx : in Board_Index) return Boolean is
       Board_I : Board_Index := Board_Idx;
+      Wrapped : Boolean := False;
+      Seeds : constant Seed_Count := Get (Board, Board_Idx);
    begin
-      for I in 1 .. Get (Board, Board_Idx) loop
+      if Seeds > 2 * Side_Width + 1 then
+         -- wraps all the way around so nothing can be empty
+         return False;
+      end if;
+      for I in 1 .. Seeds loop
          Next (Board_I, Board_Idx.Player);
+         if Board_I.Player /= Board_Idx.Player then
+            Wrapped := True;
+         end if;
       end loop;
-      return Board_I.Player = Board_Idx.Player
+      return
+        -- On our side
+        Board_I.Player = Board_Idx.Player
         and then not Board_I.Is_Pond
+        -- Finished in empty (possibly emptied by us)
         and then (Board.Get (Board_I) = 0 or else Board_I = Board_Idx)
-        and then Board.Get (Opposite (Board_I)) > 0;
+        -- Opposite has seeds (possibly added by us)
+        and then (Wrapped or else Board.Get (Opposite (Board_I)) > 0);
    end Is_Capture;
 
    procedure Move (Board : in out Board_T; Board_Idx : Board_Index; Next_Player : out Player_T) is
@@ -151,6 +176,16 @@ package body Board_Package is
          Board.Set (Board_I, 0);
          Board.Add ((Current_Player, True, Side_Index'First), Get (Board, Opposite (Board_I)));
          Board.Set (Opposite (Board_I), 0);
+      end if;
+      -- if game is over, move seeds to ponds
+      if Board.Finished then
+         Put_Line (Board.To_String);
+         for P in Player_T'Range loop
+            for S in Side_Index'Range loop
+               Board.Add ((P, True, Side_Index'First), Board.Get ((P, False, S)));
+               Board.Set ((P, False, S), 0);
+            end loop;
+         end loop;
       end if;
    end Move;
 
