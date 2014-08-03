@@ -24,6 +24,7 @@ package Board_Package is
    end record;
 
    function Total_Seeds (Board : in Board_T) return Seed_Count;
+   function Valid_Move (Board : in Board_T; Board_Idx : Board_Index) return Boolean;
    procedure Move (Board : in out Board_T; Player : in Player_T; Choice : in Side_Index; Next_Player : out Player_T) with
      Pre  => Board.Total_Seeds = Seed_Count'Last,
      Post => Board.Total_Seeds = Seed_Count'Last;

@@ -148,6 +148,11 @@ package body Board_Package is
         and then (Wrapped or else Board.Get (Opposite (Board_I)) > 0);
    end Is_Capture;
 
+   function Valid_Move (Board : in Board_T; Board_Idx : Board_Index) return Boolean is
+   begin
+      return not Board_Idx.Is_Pond and then Board.Get (Board_Idx) > 0;
+   end Valid_Move;
+
    procedure Move (Board : in out Board_T; Board_Idx : Board_Index; Next_Player : out Player_T) is
       Seeds : constant Seed_Count := Get (Board, Board_Idx);
       Current_Player : constant Player_T := Board_Idx.Player;
@@ -155,7 +160,7 @@ package body Board_Package is
       Capture : constant Boolean := Is_Capture (Board, Board_Idx);
    begin
       -- validate the move
-      if Get (Board, Board_Idx) <= 0 then
+      if not Valid_Move (Board, Board_Idx) then
          raise Invalid_Board_Index;
       end if;
       -- Move the seeds
