@@ -2,5 +2,17 @@ project Kalaha is
 
    for Main use ("kalaha.adb");
 
+   package Builder is
+      for Default_Switches ("ada") use ("-s");
+   end Builder;
+
+   package Compiler is
+      for Default_Switches ("ada") use ("-gnaty3aAbBcCdefhiknlOprStux", "-gnatVa", "-gnatw.e", "-O", "-gnat12", "-gnato", "-fstack-check");
+   end Compiler;
+
+   package Binder is
+      for Default_Switches ("ada") use ("-E");
+   end Binder;
+
 end Kalaha;
 
