@@ -1,8 +1,8 @@
 with Basic_AI;
+-- with Board_Package;
 
 generic
    with package Basic_AI_I is new Basic_AI (<>);
-
 package Tree_AI is
    use Basic_AI_I;
    use Board_Package_I;

@@ -7,7 +7,7 @@ project Kalaha is
    end Builder;
 
    package Compiler is
-      for Default_Switches ("ada") use ("-gnaty3aAbBcCdefhiknlOprStux", "-gnatVa", "-gnatw.e", "-O", "-gnat12", "-gnato", "-fstack-check", "-gnata", "-gnatf", "-g");
+      for Default_Switches ("ada") use ("-gnaty3aAbBcCdefhiknlOprStux", "-gnatVa", "-gnatw.e.Y", "-gnato", "-fstack-check", "-gnata", "-gnatf", "-g");
    end Compiler;
 
    package Binder is
@@ -17,6 +17,10 @@ project Kalaha is
    package Linker is
       for Default_Switches ("ada") use ("-g");
    end Linker;
+
+   package Pretty_Printer is
+      for Default_Switches ("ada") use ("-N");
+   end Pretty_Printer;
 
 end Kalaha;
 

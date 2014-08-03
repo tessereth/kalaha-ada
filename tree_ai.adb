@@ -3,7 +3,7 @@ package body Tree_AI is
    function Minimax (Ai : Minimax_AI;
                      Board : Board_T;
                      Player, Current_Player : Player_T;
-                     Depth : Positive) return Huristic_Val is
+                     Depth : Natural) return Huristic_Val is
       Take_Max : constant Boolean := Current_Player = Player;
       Score : Huristic_Val;
       Best_Score : Huristic_Val;

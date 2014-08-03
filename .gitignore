@@ -3,3 +3,7 @@
 *.pp
 b~kalaha.ads
 b~kalaha.adb
+*.db
+*.db-shm
+*.db-wal
+kalaha-loc.xml

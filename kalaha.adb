@@ -1,7 +1,7 @@
 with Ada.Text_IO; use Ada.Text_IO;
 with Board_Package;
 with Basic_AI;
--- with Tree_AI;
+with Tree_AI;
 
 procedure Kalaha is
    type Player_T is (A, B);
@@ -9,8 +9,8 @@ procedure Kalaha is
    use Board_6_6;
    package Basic_AI_I is new Basic_AI (Board_6_6);
    use Basic_AI_I;
-   -- package Tree_AI_I is new Tree_AI (Basic_AI_I);
-   -- use Tree_AI_I;
+   package Tree_AI_I is new Tree_AI (Basic_AI_I);
+   use Tree_AI_I;
 
    Board : Board_T := Initial_Board;
    Current_Player : Player_T := Player_T'First;
