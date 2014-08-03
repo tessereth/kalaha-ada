@@ -56,6 +56,13 @@ package body Tree_AI is
       return Best_Move;
    end Next;
 
+   overriding function Next (Ai : Alpha_Beta_AI;
+                             Board : Board_T;
+                             Player : Player_T) return Side_Index is
+   begin
+      return Side_Index'Invalid_Value;
+   end Next;
+
    function Pond_Diff (Board : Board_T; Player : Player_T) return Huristic_Val is
    begin
       return Huristic_Val (Board.Ponds (Player) - Board.Ponds (Next (Player)));

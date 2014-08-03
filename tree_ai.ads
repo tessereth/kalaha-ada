@@ -21,6 +21,15 @@ package Tree_AI is
                              Board : Board_T;
                              Player : Player_T) return Side_Index;
 
+   type Alpha_Beta_AI is new Kalaha_AI with record
+      Huristic : Huristic_Ptr;
+      Depth : Positive;
+   end record;
+
+   overriding function Next (Ai : Alpha_Beta_AI;
+                             Board : Board_T;
+                             Player : Player_T) return Side_Index;
+
    function Pond_Diff (Board : Board_T; Player : Player_T) return Huristic_Val;
 
 end Tree_AI;
