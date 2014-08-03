@@ -23,6 +23,7 @@ package Board_Package is
       Side_Idx : Side_Index;
    end record;
 
+   function Next (Player : Player_T) return Player_T;
    function Total_Seeds (Board : in Board_T) return Seed_Count;
    function Valid_Move (Board : in Board_T; Board_Idx : Board_Index) return Boolean;
    procedure Move (Board : in out Board_T; Player : in Player_T; Choice : in Side_Index; Next_Player : out Player_T) with

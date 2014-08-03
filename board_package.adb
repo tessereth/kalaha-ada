@@ -7,6 +7,9 @@ package body Board_Package is
    package Seed_IO is new Integer_IO (Seed_Count);
    use Seed_IO;
 
+   Num_Players : constant Positive :=
+     Player_T'Pos (Player_T'Last) - Player_T'Pos (Player_T'First) + 1;
+
    function Is_Zero (Side : Side_T) return Boolean is
    begin
       for I of Side loop
@@ -41,7 +44,7 @@ package body Board_Package is
       if Board_Idx.Is_Pond then
          if Board_Idx.Player /= Player then
             -- a player cannot be in an opponents pond
-            raise Invalid_Board_Index;
+            raise Invalid_Board_Index with "Cannot be in another player's pond";
          end if;
          return (Player   => Next (Board_Idx.Player),
                  Is_Pond  => False,
@@ -73,7 +76,7 @@ package body Board_Package is
         Side_Index'Last - (Board_Idx.Side_Idx - Side_Index'First);
    begin
       if Board_Idx.Is_Pond then
-         raise Invalid_Board_Index;
+         raise Invalid_Board_Index with "Ponds do not have an opposite";
       end if;
       return (Next (Board_Idx.Player), False, New_Side);
    end Opposite;
@@ -128,7 +131,7 @@ package body Board_Package is
       Wrapped : Boolean := False;
       Seeds : constant Seed_Count := Get (Board, Board_Idx);
    begin
-      if Seeds > 2 * Side_Width + 1 then
+      if Seeds > Num_Players * Side_Width + 1 then
          -- wraps all the way around so nothing can be empty
          return False;
       end if;
@@ -161,7 +164,7 @@ package body Board_Package is
    begin
       -- validate the move
       if not Valid_Move (Board, Board_Idx) then
-         raise Invalid_Board_Index;
+         raise Invalid_Board_Index with "Move is invalid: " & To_String (Board_Idx) & To_String (Board);
       end if;
       -- Move the seeds
       Board.Set (Board_I, 0);
@@ -184,7 +187,6 @@ package body Board_Package is
       end if;
       -- if game is over, move seeds to ponds
       if Board.Finished then
-         Put_Line (Board.To_String);
          for P in Player_T'Range loop
             for S in Side_Index'Range loop
                Board.Add ((P, True, Side_Index'First), Board.Get ((P, False, S)));
@@ -262,7 +264,7 @@ package body Board_Package is
       Space : constant String := " ";
       Opponent : constant Player_T := Next (Player);
    begin
-      if Player_T'Pos (Player_T'Last) - Player_T'Pos (Player_T'First) + 1 /= 2 then
+      if Num_Players /= 2 then
          raise Too_Many_Players;
       end if;
       -- Opponent
