@@ -19,4 +19,20 @@ package Basic_AI is
 
    overriding function Next (Ai : Random_AI; Board : Board_T; Player : Player_T) return Side_Index;
 
+   subtype Huristic_Val is Integer;
+
+   type Huristic_Ptr is access function (Board : Board_T;
+                                         Player : Player_T) return Huristic_Val;
+
+   type Minimax_AI is new Kalaha_AI with record
+      Huristic : Huristic_Ptr;
+      Depth : Positive;
+   end record;
+
+   overriding function Next (Ai : Minimax_AI;
+                             Board : Board_T;
+                             Player : Player_T) return Side_Index;
+
+   function Pond_Diff (Board : Board_T; Player : Player_T) return Huristic_Val;
+
 end Basic_AI;
